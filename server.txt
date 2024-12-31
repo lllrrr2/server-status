@@ -11,6 +11,7 @@
 [VNT](https://github.com/vnt-dev/vnt) TCP s1.ct8.pl 29872  德国萨克森 IPv4
 [VNT](https://github.com/vnt-dev/vnt) udp s1.ct8.pl 29872  德国萨克森 IPv4
 [VNT](https://github.com/vnt-dev/vnt) ws s1.ct8.pl 29872  德国萨克森 IPv4
+[VNT](https://github.com/vnt-dev/vnt) ws vnt.us.kg CloudFlare IPv4
 
 [EasyTier](https://github.com/EasyTier/EasyTier) TCP public.easytier.top 11010 广东河源 ipv4
 [EasyTier](https://github.com/EasyTier/EasyTier) UDP public.easytier.top 11010 广东河源 ipv4
