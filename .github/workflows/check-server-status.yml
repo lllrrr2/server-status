@@ -1,0 +1,127 @@
+name: 服务状态检测
+
+on:
+# 当修改 main 分支的内容时自动执行该流程
+  push:
+    branches:
+       - main
+#定时循环每5个小时
+  schedule:
+   - cron: "0 */5 * * *"
+  workflow_dispatch:
+
+env:
+  TZ: Asia/Shanghai
+
+#设置仓库的读写权限
+permissions:
+  contents: write
+  pull-requests: write
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+      - name: delete-workflow
+        uses: GitRML/delete-workflow-runs@main
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          retain_days: 3 
+      - name: install network tools
+        run: |
+          sudo -E apt-get -y update
+          sudo -E apt-get install -y net-tools
+          sudo timedatectl set-timezone Asia/Shanghai
+          
+      - name: check server status
+        id: check-server-status
+        run: |
+          rm README.md && touch README.md
+          
+          echo "# 服务状态" | tee -a README.md
+          echo "> 这个README每5小时由Github action生成一次." | tee -a README.md
+          echo "## 上次更新时间：" | tee -a README.md
+          date "+%Y年%m月%d日 %H:%M:%S" | tee -a README.md
+          echo "## 公共节点状态： " | tee -a README.md
+          echo "公共节点仅用于测试，对于生产，请设置您自己的节点." | tee -a README.md
+          echo "|服务名称|协议|服务器地址|端口|备注信息|IPV4/IPV6|**状态**|" |tee -a README.md
+          echo "|--|--|--|--|--|--|--|" |tee -a README.md
+          
+          # 读取 server.txt 文件并遍历每一行
+          while IFS=' ' read -r name protocol address port region ipv; do
+          # 排除以 # 开头的行和空行
+          if [[ -z "$name" || "$name" =~ ^# ]]; then
+              continue  # 如果是空行或以 # 开头的行，跳过当前循环
+          fi
+          # 判断 $4 是否是端口（检查是否为纯数字且范围在 1-65535）
+          if [[ ! "$port" =~ ^[0-9]+$ || "$port" -lt 1 || "$port" -gt 65535 ]]; then
+              ipv="$region"    # 将 $5 的值赋给 $6
+              region="$port"   # 将 $4 的值赋给 $5
+              port=""          # 将 $5 清空
+          fi
+          # 判断是否需要填充地区信息
+          if [[ -z "$ipv" && "$region" =~ ^(V4|v4|IPv4|v4/v6|ipv4|ipv4/ipv6|v6|IPv6|ipv6|v4/v6|ipv4/v6)$ ]]; then
+              # 如果 $6 为空且 $5 中包含 IPV4/IPV6 标识，认为备注信息为空
+              ipv="$region"   # 将 $5 的值赋给 $6，即标识 IP 类型
+              region=""       # 将备注信息清空
+          fi
+          # 判断协议类型
+          if [[ "$protocol" == "UDP" || "$protocol" == "udp" ]]; then
+              # 测试 UDP 端口是否正常
+              nc -v -w 3 -u -z "$address" "$port" &>/dev/null
+              if [[ $? -eq 0 ]]; then
+                  echo "|$name|$protocol|$address|$port|$region|$ipv|正常✅|" | tee -a README.md
+              else
+                  echo "|$name|$protocol|$address|$port|$region|$ipv|离线❌|" | tee -a README.md
+              fi
+          elif [[ "$protocol" == "HTTP" || "$protocol" == "http" || "$protocol" == "HTTPS" || "$protocol" == "https" ]]; then
+              # 测试 HTTP/HTTPS 连接是否正常
+              if [[ "$port" != "" ]]; then
+                  # 如果有端口号，则添加端口
+                  response_code=$(curl -Lks -w "%{http_code}" -o /dev/null "$protocol://$address:$port")
+              else
+                  # 没有端口号，直接使用默认端口
+                  response_code=$(curl -Lks -w "%{http_code}" -o /dev/null "$protocol://$address")
+              fi
+        
+              if [[ "$response_code" -eq 200 ]]; then
+                  echo "|$name|$protocol|$address|$port|$region|$ipv|正常✅|" | tee -a README.md
+              else
+                  echo "|$name|$protocol|$address|$port|$region|$ipv|离线❌|" | tee -a README.md
+              fi
+          else
+              # 其他协议
+              nc -v -w 3 -z "$address" "$port" &>/dev/null
+              if [[ $? -eq 0 ]]; then
+                  echo "|$name|$protocol|$address|$port|$region|$ipv|正常✅|" | tee -a README.md
+              else
+                  echo "|$name|$protocol|$address|$port|$region|$ipv|离线❌|" | tee -a README.md
+              fi
+          fi
+          done < server.txt
+        
+          echo ::set-output name=server-status::$(cat README.md)
+
+      - name: Commit files
+        run: |
+          git config --local user.email "github-actions@github.com"
+          git config --local user.name "github-actions"
+          git add .
+          git commit -m "更新服务状态 ： $(date '+%Y-%m-%d %H:%M:%S')" -a
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          force_with_lease: true
+
+  keepalive-workflow:
+    name: keepalive
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: gautamkrishnar/keepalive-workflow@v2
+        #with:
+          #use_api: true
