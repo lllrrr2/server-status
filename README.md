@@ -1,7 +1,7 @@
 # 服务状态
 > 这个[README](https://github.com/lmq8267/server-status)每5小时由Github action生成一次.
 ## 上次更新时间：
-2024年12月31日 23:20:17
+2024年12月31日 23:26:43
 ## 公共节点状态： 
 公共节点仅用于测试，对于生产，请设置您自己的节点.
 
@@ -17,7 +17,7 @@
 |[VNT](https://github.com/vnt-dev/vnt)|TCP|s1.ct8.pl|29872|德国萨克森|IPv4|正常✅|
 |[VNT](https://github.com/vnt-dev/vnt)|udp|s1.ct8.pl|29872|德国萨克森|IPv4|正常✅|
 |[VNT](https://github.com/vnt-dev/vnt)|ws|s1.ct8.pl|29872|德国萨克森|IPv4|正常✅|
-|[VNT](https://github.com/vnt-dev/vnt)|ws|vnt.us.kg||CloudFlare|IPv4|离线❌|
+|[VNT](https://github.com/vnt-dev/vnt)|ws|vnt.us.kg|80|CloudFlare|IPv4|正常✅|
 |[EasyTier](https://github.com/EasyTier/EasyTier)|TCP|public.easytier.top|11010|广东河源|ipv4|正常✅|
 |[EasyTier](https://github.com/EasyTier/EasyTier)|UDP|public.easytier.top|11010|广东河源|ipv4|正常✅|
 |[EasyTier](https://github.com/EasyTier/EasyTier)|TCP|107.172.30.239|11010|美国圣何塞|ipv4|正常✅|
