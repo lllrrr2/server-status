@@ -72,12 +72,7 @@ jobs:
           # 判断协议类型
           if [[ "$protocol" == "UDP" || "$protocol" == "udp" ]]; then
               # 测试 UDP 端口是否正常
-              nc -v -w 3 -u -z "$address" "$port" &>/dev/null
-              if [[ $? -eq 0 ]]; then
-                  echo "|$name|$protocol|$address|$port|$region|$ipv|正常✅|" | tee -a README.md
-              else
-                  echo "|$name|$protocol|$address|$port|$region|$ipv|离线❌|" | tee -a README.md
-              fi
+              nc -v -w 3 -u -z "$address" "$port" &>/dev/null && echo "|$name|$protocol|$address|$port|$region|$ipv|正常✅|" | tee -a README.md || echo "|$name|$protocol|$address|$port|$region|$ipv|离线❌|" | tee -a README.md
           elif [[ "$protocol" == "HTTP" || "$protocol" == "http" || "$protocol" == "HTTPS" || "$protocol" == "https" ]]; then
               # 测试 HTTP/HTTPS 连接是否正常
               if [[ "$port" != "" ]]; then
@@ -94,13 +89,8 @@ jobs:
                   echo "|$name|$protocol|$address|$port|$region|$ipv|离线❌|" | tee -a README.md
               fi
           else
-              # 其他协议
-              nc -v -w 3 -z "$address" "$port" &>/dev/null
-              if [[ $? -eq 0 ]]; then
-                  echo "|$name|$protocol|$address|$port|$region|$ipv|正常✅|" | tee -a README.md
-              else
-                  echo "|$name|$protocol|$address|$port|$region|$ipv|离线❌|" | tee -a README.md
-              fi
+              # TCP协议
+              nc -v -w 3 -z "$address" "$port" &>/dev/null && echo "|$name|$protocol|$address|$port|$region|$ipv|正常✅|" | tee -a README.md || echo "|$name|$protocol|$address|$port|$region|$ipv|离线❌|" | tee -a README.md
           fi
           done < server.txt
         
