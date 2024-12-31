@@ -8,5 +8,7 @@
 [EasyTier](https://github.com/EasyTier/EasyTier) UDP public.easytier.top 11010 广东河源 ipv4
 
 短链接 http 1hc.us.kg 
+文件服务器 https 8267.nyc.mn 
+文件服务器 http s1.ct8.pl 1095 德国萨克森
 
 
