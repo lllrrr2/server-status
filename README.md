@@ -1,13 +1,12 @@
 # 服务状态
 > 这个[README](https://github.com/lmq8267/server-status)每5小时由Github action生成一次.
 ## 上次更新时间：
-2024年12月31日 22:50:40
+2024年12月31日 22:51:45
 ## 公共节点状态： 
 公共节点仅用于测试，对于生产，请设置您自己的节点.
 
 |服务名称|协议|服务器地址|端口|备注信息|IPV4/IPV6|**状态**|
 |--|--|--|--|--|--|--|
-|测试|http|1sfsfs|555|测试||离线❌|
 |[VNT](https://github.com/vnt-dev/vnt)|TCP|vnt.wherewego.top|29872|广州阿里云|IPv4|正常✅|
 |[VNT](https://github.com/vnt-dev/vnt)|udp|vnt.wherewego.top|29872|广州阿里云|IPv4|正常✅|
 |[VNT](https://github.com/vnt-dev/vnt)|TCP|107.172.30.239|29872|美国圣何塞|IPv4|正常✅|
