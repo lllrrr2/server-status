@@ -39,6 +39,7 @@ jobs:
       - name: check server status
         id: check-server-status
         run: |
+          set +e
           rm README.md && touch README.md
           
           echo "# 服务状态" | tee -a README.md
