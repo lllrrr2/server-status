@@ -1,7 +1,7 @@
 # 服务状态
 > 这个[README](https://github.com/lmq8267/server-status)每5小时由Github action生成一次.
 ## 上次更新时间：
-2024年12月31日 21:47:35
+2024年12月31日 22:33:38
 ## 公共节点状态： 
 公共节点仅用于测试，对于生产，请设置您自己的节点.
 
@@ -21,6 +21,7 @@
 |[EasyTier](https://github.com/EasyTier/EasyTier)|UDP|107.172.30.239|11010|美国圣何塞|ipv4|正常✅|
 |[NetLink](https://github.com/rustp2p/NetLink)|TCP|107.172.30.239|23333|美国圣何塞|IPv4|正常✅|
 |[NetLink](https://github.com/rustp2p/NetLink)|udp|107.172.30.239|23333|美国圣何塞|IPv4|正常✅|
+|测试|tcp|107.172.30.219|23333|测试||离线❌|
 |短链接|http|1hc.us.kg||CloudFlare||正常✅|
 |短链接|http|s4.serv00.com|8828|波兰||正常✅|
 |文件服务器|https|8267.nyc.mn||CloudFlare||正常✅|
