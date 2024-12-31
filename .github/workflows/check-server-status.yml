@@ -41,11 +41,12 @@ jobs:
           rm README.md && touch README.md
           
           echo "# 服务状态" | tee -a README.md
-          echo "> 这个README每5小时由Github action生成一次." | tee -a README.md
+          echo "> 这个[README](https://github.com/${GITHUB_REPOSITORY})每5小时由Github action生成一次." | tee -a README.md
           echo "## 上次更新时间：" | tee -a README.md
           date "+%Y年%m月%d日 %H:%M:%S" | tee -a README.md
           echo "## 公共节点状态： " | tee -a README.md
           echo "公共节点仅用于测试，对于生产，请设置您自己的节点." | tee -a README.md
+          echo "" | tee -a README.md
           echo "|服务名称|协议|服务器地址|端口|备注信息|IPV4/IPV6|**状态**|" |tee -a README.md
           echo "|--|--|--|--|--|--|--|" |tee -a README.md
           
