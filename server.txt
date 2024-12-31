@@ -14,7 +14,7 @@
 [EasyTier](https://github.com/EasyTier/EasyTier) UDP public.easytier.top 11010 广东河源 ipv4
 [EasyTier](https://github.com/EasyTier/EasyTier) TCP 107.172.30.239 11010 美国圣何塞 ipv4
 [EasyTier](https://github.com/EasyTier/EasyTier) UDP 107.172.30.239 11010 美国圣何塞 ipv4
-[EasyTier](https://github.com/EasyTier/EasyTier) https easytier.cn/web  官方WEB服务器 
+#[EasyTier](https://github.com/EasyTier/EasyTier) https easytier.cn/web  官方WEB服务器 
 
 [NetLink](https://github.com/rustp2p/NetLink) TCP 107.172.30.239 23333  美国圣何塞 IPv4
 [NetLink](https://github.com/rustp2p/NetLink) udp 107.172.30.239 23333  美国圣何塞 IPv4
