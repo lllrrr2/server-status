@@ -113,7 +113,7 @@ jobs:
         run: |
           #将构建出的html文件通过scp命令复制到文件服务器里
           sudo apt-get install -y sshpass
-          sshpass -p ${{ secrets.SSH_PRIVATE_KEY }} scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r ./README.md lmq8267@s1.ct8.pl:/usr/home/lmq8267/opt/caddy/server-status/README.md
+          sshpass -p "${{ secrets.SSH_PRIVATE_KEY }}" scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r ./README.md ./.github/workflows/*.yml lmq8267@s1.ct8.pl:/usr/home/lmq8267/opt/caddy/server-status/
       - name: Commit files
         run: |
           git config --local user.email "github-actions@github.com"
