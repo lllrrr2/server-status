@@ -30,7 +30,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           retain_days: 1
-          keep_minimum_runs: 1
+          keep_minimum_runs: 0
       - name: install network tools
         run: |
           sudo -E apt-get -y update
@@ -105,9 +105,7 @@ jobs:
               fi
           fi
           done < server.txt
-        
-          echo ::set-output name=server-status::$(cat README.md)
-
+    
       - name: 自用更新
         if: github.repository_owner == 'lmq8267' # 判断仓库所有者是否是 lmq8267 才执行
         env:
