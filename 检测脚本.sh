@@ -47,7 +47,7 @@ for filename in *.txt; do
   echo "|--|--|--|--|--|--|--|" |tee -a README.md >/dev/null 2>&1
 
   # 读取 .txt 文件并遍历每一行
-  while IFS=' ' read -r name protocol address port region ipv; do
+  awk '{print $0}' $filename | while IFS=' ' read -r name protocol address port region ipv; do
     # 排除以 # 开头的行和空行
     if [[ -z "$name" || "$name" =~ ^# ]]; then
       continue  # 如果是空行或以 # 开头的行，跳过当前循环
@@ -97,7 +97,7 @@ for filename in *.txt; do
                   echo "|$name|$protocol|$address|$port|$region|$ipv|离线❌|" | tee -a README.md >/dev/null 2>&1
               fi
           fi
-          done < $filename
+          done
     echo -e "</details>\n" | tee -a README.md >/dev/null 2>&1
 done
 
