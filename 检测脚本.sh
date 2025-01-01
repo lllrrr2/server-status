@@ -18,13 +18,13 @@ if [ -z "$txt_files" ]; then
   echo "" | tee -a README.md 
   echo "**⚠️ 当前目录未发现记录服务的 \`.txt\` 文件，请按以下格式创建以 \`服务名称.txt\` 的文件**" | tee -a README.md
   echo -e "\n\`\`\`sh" | tee -a README.md
-  echo "# 下面六个是按空格进行分割的,每个选项内不能出现空格，脚本会排除#开头和空白行，协议支持 tcp udp ws wss http https" | tee -a README.md
+  echo "# 下面六个是按空格进行分割的,每个选项内不能出现空格，脚本会排除#开头和空白行，协议支持 tcp ws wss http https" | tee -a README.md
   echo -e "# ①服务名称 ②协议 ③服务器地址 ④端口(可留空)  ⑤备注信息(可留空)  ⑥IPV4/IPV6(可留空) \n " | tee -a README.md
-  echo "测试名 TCP 120.12.12.12 11010 广东阿里云  ipv4 " | tee -a README.md
+  echo "测试名 tcp 120.12.12.12 11010 广东阿里云  ipv4 " | tee -a README.md
   echo -e "\`\`\`\n效果如下:\n" | tee -a README.md
   echo "|服务名称|协议|服务器地址|端口|备注信息|IPV4/IPV6|**状态**|" |tee -a README.md
   echo "|--|--|--|--|--|--|--|" |tee -a README.md 
-  echo "|测试名|TCP|120.12.12.12|11010|广东阿里云|ipv4|正常✅|" |tee -a README.md 
+  echo "|测试名|tcp|120.12.12.12|11010|广东阿里云|ipv4|正常✅|" |tee -a README.md 
   exit 1
 fi
 echo -e "<details> <summary>目录</summary>\n" | tee -a README.md >/dev/null 2>&1
@@ -65,16 +65,7 @@ for filename in *.txt; do
       region=""       # 将备注信息清空
     fi
           # 判断协议类型
-          if [[ "$protocol" == "UDP" || "$protocol" == "udp" ]]; then
-              # 测试 UDP 端口是否正常
-              #如果是嵌入式设备 如路由器 nc是阉割版的 改用 socat 命令 ：socat -v UDP4-DATAGRAM:"$address:$port,connect-timeout=3" /dev/null &>/dev/null
-              nc -v -w 3 -u -z "$address" "$port" &>/dev/null
-              if [[ $? -eq 0 ]]; then
-                  echo "|$name|$protocol|$address|$port|$region|$ipv|正常✅|" | tee -a README.md >/dev/null 2>&1
-              else
-                  echo "|$name|$protocol|$address|$port|$region|$ipv|离线❌|" | tee -a README.md >/dev/null 2>&1
-              fi
-          elif [[ "$protocol" == "HTTP" || "$protocol" == "http" || "$protocol" == "HTTPS" || "$protocol" == "https" ]]; then
+          if [[ "$protocol" == "HTTP" || "$protocol" == "http" || "$protocol" == "HTTPS" || "$protocol" == "https" ]]; then
               # 测试 HTTP/HTTPS 连接是否正常
               if [[ "$port" != "" ]]; then
                   # 如果有端口号，则添加端口
@@ -91,7 +82,7 @@ for filename in *.txt; do
               else
                   echo "|$name|$protocol|$address|$port|$region|$ipv|离线❌|" | tee -a README.md >/dev/null 2>&1
               fi
-          else
+          elif [[ "$protocol" == "TCP" || "$protocol" == "tcp" || "$protocol" == "ws" || "$protocol" == "WS" || "$protocol" == "WSS" || "$protocol" == "wss" ]]; then
               # TCP协议
               #如果是嵌入式设备 如路由器 nc是阉割版的 改用 socat 命令 ：socat -v TCP4:"$address:$port,connect-timeout=3" /dev/null &>/dev/null
               nc -v -w 3 -z "$address" "$port" &>/dev/null
@@ -100,6 +91,8 @@ for filename in *.txt; do
               else
                   echo "|$name|$protocol|$address|$port|$region|$ipv|离线❌|" | tee -a README.md >/dev/null 2>&1
               fi
+          else
+              echo "|$name|$protocol|$address|$port|$region|$ipv|协议无法检测⚠️|" | tee -a README.md >/dev/null 2>&1
           fi
           done
     echo -e "</details>\n" | tee -a README.md >/dev/null 2>&1
