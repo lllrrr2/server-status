@@ -79,9 +79,11 @@ for filename in *.txt; do
               if [[ "$port" != "" ]]; then
                   # 如果有端口号，则添加端口
                   response_code=$(curl -Lks -w "%{http_code}" -o /dev/null "$protocol://$address:$port")
+                  name="[$name](${protocol}://${address}:${port})"
               else
                   # 没有端口号，直接使用默认端口
                   response_code=$(curl -Lks -w "%{http_code}" -o /dev/null "$protocol://$address")
+                  name="[$name](${protocol}://${address})"
               fi
         
               if [[ "$response_code" -eq 200 ]]; then
