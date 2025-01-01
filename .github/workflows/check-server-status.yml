@@ -54,7 +54,7 @@ jobs:
           echo "|--|--|--|--|--|--|--|" |tee -a README.md
           
           # 读取 server.txt 文件并遍历每一行
-          while IFS=' ' read -r name protocol address port region ipv; do
+          awk '{print $0}' server.txt | while IFS=' ' read -r name protocol address port region ipv; do
           # 排除以 # 开头的行和空行
           if [[ -z "$name" || "$name" =~ ^# ]]; then
               continue  # 如果是空行或以 # 开头的行，跳过当前循环
@@ -104,7 +104,7 @@ jobs:
                   echo "|$name|$protocol|$address|$port|$region|$ipv|离线❌|" | tee -a README.md
               fi
           fi
-          done < server.txt
+          done
     
       - name: 自用更新
         if: github.repository_owner == 'lmq8267' # 判断仓库所有者是否是 lmq8267 才执行
