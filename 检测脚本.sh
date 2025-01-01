@@ -67,6 +67,7 @@ for filename in *.txt; do
           # 判断协议类型
           if [[ "$protocol" == "UDP" || "$protocol" == "udp" ]]; then
               # 测试 UDP 端口是否正常
+              #如果是嵌入式设备 如路由器 nc是阉割版的 改用 socat 命令 ：socat -v -T 3 UDP4-DATAGRAM:"$address:$port" /dev/null &>/dev/null
               nc -v -w 3 -u -z "$address" "$port" &>/dev/null
               if [[ $? -eq 0 ]]; then
                   echo "|$name|$protocol|$address|$port|$region|$ipv|正常✅|" | tee -a README.md >/dev/null 2>&1
@@ -89,7 +90,8 @@ for filename in *.txt; do
                   echo "|$name|$protocol|$address|$port|$region|$ipv|离线❌|" | tee -a README.md >/dev/null 2>&1
               fi
           else
-              # 其他协议
+              # TCP协议
+              #如果是嵌入式设备 如路由器 nc是阉割版的 改用 socat 命令 ：socat -v -T 3 TCP4:"$address:$port" /dev/null &>/dev/null
               nc -v -w 3 -z "$address" "$port" &>/dev/null
               if [[ $? -eq 0 ]]; then
                   echo "|$name|$protocol|$address|$port|$region|$ipv|正常✅|" | tee -a README.md >/dev/null 2>&1
@@ -102,14 +104,3 @@ for filename in *.txt; do
 done
 
 echo "执行完成"
-
-
-
-
-
-
-
-
-
-
-
