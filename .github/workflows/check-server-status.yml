@@ -117,7 +117,7 @@ jobs:
         run: |
           #远程ssh执行更新命令
           sudo apt-get install -y sshpass
-          sshpass -p "${{ secrets.SSH_PRIVATE_KEY }}" scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -tt "${{ secrets.SERVER }}" "${{ secrets.CMD }}"
+          sshpass -p "${{ secrets.SSH_PRIVATE_KEY }}" ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -tt "${{ secrets.SERVER }}" "${{ secrets.CMD }}"
       - name: Commit files
         run: |
           git config --local user.email "github-actions@github.com"
