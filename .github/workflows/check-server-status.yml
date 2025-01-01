@@ -5,9 +5,9 @@ on:
   push:
     branches:
        - main
-#定时循环每5个小时
+#定时循环每2个小时
   schedule:
-   - cron: "0 */5 * * *"
+   - cron: "0 */2 * * *"
   workflow_dispatch:
 
 env:
