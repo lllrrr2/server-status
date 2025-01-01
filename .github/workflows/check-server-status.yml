@@ -29,7 +29,8 @@ jobs:
         uses: GitRML/delete-workflow-runs@main
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          retain_days: 3 
+          retain_days: 1
+          keep_minimum_runs: 1
       - name: install network tools
         run: |
           sudo -E apt-get -y update
