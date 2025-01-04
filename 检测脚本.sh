@@ -80,7 +80,7 @@ for filename in *.txt; do
               if [[ "$response_code" -eq 200 ]]; then
                   echo "|$name|$protocol|$address|$port|$region|$ipv|正常✅|" | tee -a README.md >/dev/null 2>&1
               else
-                  echo "|$name|$protocol|$address|$port|$region|$ipv|离线❌|" | tee -a README.md >/dev/null 2>&1
+                  echo "|$name|<span style="color:red">$protocol</span>|<span style="color:red">$address</span>|<span style="color:red">$port</span>|<span style="color:red">$region</span>|<span style="color:red">$ipv</span>|<span style="color:red">离线</span>❌|" | tee -a README.md >/dev/null 2>&1
               fi
           elif [[ "$protocol" == "TCP" || "$protocol" == "tcp" || "$protocol" == "ws" || "$protocol" == "WS" || "$protocol" == "WSS" || "$protocol" == "wss" ]]; then
               # TCP协议
@@ -89,7 +89,7 @@ for filename in *.txt; do
               if [[ $? -eq 0 ]]; then
                   echo "|$name|$protocol|$address|$port|$region|$ipv|正常✅|" | tee -a README.md >/dev/null 2>&1
               else
-                  echo "|$name|$protocol|$address|$port|$region|$ipv|离线❌|" | tee -a README.md >/dev/null 2>&1
+                  echo "|$name|<span style="color:red">$protocol</span>|<span style="color:red">$address</span>|<span style="color:red">$port</span>|<span style="color:red">$region</span>|<span style="color:red">$ipv</span>|<span style="color:red">离线</span>❌|" | tee -a README.md >/dev/null 2>&1
               fi
           else
               echo "|$name|$protocol|$address|$port|$region|$ipv|协议无法检测⚠️|" | tee -a README.md >/dev/null 2>&1
